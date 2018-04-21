@@ -95,7 +95,7 @@ function getISOYear(date)
 }  
 
 Date.prototype.dayOfYear = function(){
-	return this.days(new Date(this.getFullYear(), 0, 1));
+	return this.days(new Date(this.getFullYear(), 0, 1)) + 1;
 }
 
 //	Date.days() return number of days between this and given date.
