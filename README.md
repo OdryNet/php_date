@@ -1,11 +1,11 @@
 # php_date
 Javascript version of the PHP date function and some date tools
 
-# Synopsis
+## Synopsis
 
 string php_date(string format, Date date)
 
-# Description
+## Description
 
 Format a javascript Date object according for the format string
 
@@ -81,7 +81,7 @@ Possible format characters:
 
 	Any unrecognised character will be printed as is.
 
-# Examples
+## Examples
 
 	now = php_date("Y-m-d H:i:s");
 	//	2015-08-20 12:34:56
