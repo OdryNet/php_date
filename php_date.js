@@ -3,6 +3,9 @@
 
 //	See php_date.??.js for localization
 
+//	External function to manage days/months names.
+//	mainly to allow different locales after this file is loaded.
+
 var calNames = {
 	names: [
 		"Sunday Monday Tuesday Wednesday Thursday Friday Saturday",
@@ -21,6 +24,7 @@ var calNames = {
 
 
 /*	Next 2 functions to be removed, replaced with format
+		... or not?
  */
 Date.prototype.dayName = function(len) {
 	return calNames.get(0, this.getDay());
@@ -95,7 +99,7 @@ function getISOYear(date)
 }  
 
 Date.prototype.dayOfYear = function(){
-	return this.days(new Date(this.getFullYear(), 0, 1)) + 1;
+	return this.days(new Date(this.getFullYear(), 0, 1));
 }
 
 //	Date.days() return number of days between this and given date.
