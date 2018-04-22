@@ -103,5 +103,5 @@ Possible format characters:
 
 ## Known bugs
 
-the 'z' argument looks to have a problem  around midnight, probably something to do with the fact that the PHP date functon works with UTC time, whereas the Javascript version works with local time.
+the 'z' argument looks to have a problem  around midnight, probably something to do with the fact that the PHP date function works with UTC time, whereas the Javascript version works with local time.
 
