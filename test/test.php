@@ -1,23 +1,22 @@
 <?php	//	$Id: date.php 170 2015-10-21 20:55:11Z thierry $
-$format = 'd D j l N w z F m M n t L Y y a A B g G h H i s u O P Z T I o W';
+$letters = 'd D j l N w z F m M n t L Y y a A B g G h H i s u O P Z T I o W';
 //	Default to now.
-$epoch = time();
-$value = '';
+function _post($i, $d='') { return isset($_POST[$i]) ? $_POST[$i]: $d; }
 
-if($_SERVER['REQUEST_METHOD']=='POST') {
-	//	form posted, try to interpret the time
-	$value = isset($_POST['newtime']) ? $_POST['newtime'] : '';
-	$epoch = strtotime($value);
-	//	If it failed, default to now.
-	if($epoch===false || $epoch==-1) $epoch = time();
-}
+$value = _post('newtime', 'now');
+$format = _post('format', 'D j M Y H:i:s');
+
+$epoch = strtotime($value);
+//	If it failed, default to now.
+if($epoch===false || $epoch==-1) $epoch = time();
 ?>
 <!DOCTYPE HTML>
 <html>
 <head>
 <title>Test Date</title>
 <style>
-span {font-size:small;}
+fieldset {margin-top:1em;}
+#fmtResult {background-color:#eee;padding:2px 4px;}
 table.diff {border:1px solid black; border-collapse:collapse;}
 table.diff th, table.diff td {
 	border:1px solid black;
@@ -29,8 +28,9 @@ table.data th {font-size:small;text-align:right;font-family:Arial;}
 <script type=text/javascript src=../php_date.js></script>
 <!-- script type=text/javascript src=../php_date.fr.js></script -->
 <script type=text/javascript>
-var format = "c r "+<?php var_export($format); ?>,
+var format = "c r "+<?php var_export($letters); ?>,
 	epoch = <?php var_export($epoch*1000); ?>,
+	date = new Date(epoch),
 	descriptions = {
 	"d": "day of the month (2 digits, 0 padded)",
 	"D": "short week day name (3 letters in english, Mon to Sun)",
@@ -73,41 +73,65 @@ var format = "c r "+<?php var_export($format); ?>,
 //	only works with id, compatible with everything, but VERY limited.
 function vvsdjq(element) {
 	var elements = [];
-	this.val = function() { return elements.length ? elements[0].value : undefined; }
-	this.html = function(val) { if(elements.length) elements[0].innerHTML = val; }
+	this.val = function(v) {
+		if(!elements.length) return undefined;
+		if(v===undefined) return elements[0].value;
+		else elements[0].value = v;
+	};
+	this.html = function(val) { if(elements.length) elements[0].innerHTML = val; };
 	if(element!==null) elements.push(element);
 }
 function $(i) { return new vvsdjq(document.getElementById(i.substr(1))); }
 //	end of VERY VERY stripped down version of jQuery
 
-function setToday()
+function setToday(_button)
 {
-	$('#newtime').html("now");
+	$("#newtime").val("now");
+	_button.form.submit();
 }
 
 //	Delay loadArray... until all scripts are loaded.
 (function() { setTimeout(loadArray, 10); })();
 
 function loadArray() {
-var i, l, letters = format.split(' '),
-	date = new Date(epoch);
+var i, l, letters = format.split(' ');
 
 	for(i=0; i<letters.length; i++) {
 		l = letters[i];
 		$("#date_"+l).html(php_date(l, date));
 		$("#desc_"+l).html(descriptions[l]);
 	}
+	test_format();
 }
 
+function test_format()
+{
+var f = $("#fldFormat").val();
+	$("#fmtResult").html(php_date(f, date));
+	$("#tstFormat").val(f);
+	return false;
+}
 
 </script>
 
 </head>
 <body>
+
 <form name=testit method=POST>
-<input type=text name=newtime id=newtime size=40 value="<?php echo $value; ?>" />
-<input type=submit />
-<input type=button value=Today onclick="setToday();" />
+<input type=hidden name=format id=tstFormat value="" />
+	<fieldset><legend>Change time to display</legend>
+		<input type=text name=newtime id=newtime size=40 value="<?php echo $value; ?>" />
+		<input type=submit />
+		<input type=button value=Today onclick="setToday(this);" />
+	</fieldset>
+</form>
+
+<form name=testformat onsubmit="return test_format();">
+	<fieldset><legend>Test format dynamically</legend>
+		<input type=text name=format id=fldFormat value="<?php echo $format; ?>" />
+		<input type=button value=Show onclick="test_format();" />
+		&nbsp; Result: <span id=fmtResult></span>
+	</fieldset>
 </form>
 
 <p>
@@ -131,7 +155,7 @@ var i, l, letters = format.split(' '),
 <tbody>
 <?php
 //	Set all PHP values, and IDs for JS to fill them up at load time.
-foreach(explode(' ', $format) as $l) {
+foreach(explode(' ', $letters) as $l) {
 	echo "\t<tr><th>$l</th><td>", date($l, $epoch), "</td><td id=date_$l>-</td><td id=desc_$l>-</td></tr>\n";
 }
 ?>
