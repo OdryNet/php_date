@@ -92,6 +92,14 @@ Possible format characters:
 
 	now = php_date("D, d M Y H:i:s O");
 	//	Fri, 21 Aug 2015 12:34:56 +0200
+	
+	//	Using different locale
+	<script src="/php_date/php_date.js"></script>
+	<script srv="/php_date/php_date.fr.js"></script>
+	<script>
+	var full_date = php_date("l d F Y à H\\hi");
+	//	vendredi 21 août 2018 à 12h34
+	</script>
 
 ## Known bugs
 
