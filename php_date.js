@@ -23,9 +23,9 @@ var calNames = {
 };
 
 
-/*	Next 2 functions to be removed, replaced with format
-		... or not?
- */
+//	Next 2 functions to be removed, replaced with format
+//		... or not?
+
 Date.prototype.dayName = function(len) {
 	return calNames.get(0, this.getDay());
 };
@@ -46,17 +46,14 @@ Date.prototype.fromISO = function(s) {
 	this.setTime(iso2date(s));
 };
 
-//	TODO: rename following function to fromCompact and toCompact, add toCompactFull.
-//			or find better names :S
-
 //	Convert 'YYYYMMDD[HHmmss]' to Date and reverse
-Date.prototype.fromSort = function(s) {
+Date.prototype.fromCompact = function(s) {
 var ed = s.match(/.{1,2}/g);
 	if(!ed || ed.length<4) return false;
 	this.setTime(new Date(ed[0]+ed[1], ed[2]-1, ed[3], ed[4]||0, ed[5]||0, ed[6]||0));
 };
 //	Should be renamed to fromShort and toShort.
-Date.prototype.toSort = function() {
+Date.prototype.toCompact = function() {
 	return php_date('Ymd', this);
 };
 
