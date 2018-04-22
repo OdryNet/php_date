@@ -52,18 +52,13 @@ var ed = s.match(/.{1,2}/g);
 	if(!ed || ed.length<4) return false;
 	this.setTime(new Date(ed[0]+ed[1], ed[2]-1, ed[3], ed[4]||0, ed[5]||0, ed[6]||0));
 };
-//	Should be renamed to fromShort and toShort.
 Date.prototype.toCompact = function() {
 	return php_date('Ymd', this);
 };
 
-Date.prototype.toISODate = function() {
-	return php_date('Y-m-d', this);
-};
-
 if(typeof(Date.prototype.toISOString)!='function') {
 	Date.prototype.toISOString = function() {
-		//	Can't use php_date as we need UTC time...
+		//	Can't use php_date as this is UTC time...
 		var pad2digits = function(d) {return ('0'+d).slice(-2)};
 		return ''+this.getUTCFullYear()+'-'+pad2digits(this.getUTCMonth())+'-'+pad2digits(this.getUTCDate())
 			+'T'+pad2digits(this.getUTCHours())+':'+pad2digits(this.getUTCMinutes())+':'+pad2digits(this.getUTCSeconds())
@@ -82,7 +77,7 @@ Date.prototype.getWeek = function() {
 }
 
 function getISOWeek(d){
-	d = new Date(+d);	//	Copy date to not modify original
+	d = new Date(+d);	//	Copy date to preserve original
 	d.setHours(0,0,0);	//	Reset time
 	d.setDate(d.getDate()+4-(d.getDay()||7));	//	Go to Thursday of same week
 	//	return number of weeks since first day of the year.
@@ -101,11 +96,11 @@ Date.prototype.dayOfYear = function(){
 
 //	Date.days() return number of days between this and given date.
 Date.prototype.days = function(date) {
-	return (this-date)/864e5 | 0;
+	return Math.floor((this-date)/864e5);
 }
 
-//	Date.date(): simulate PHP date() function.
-//	TODO: add handling of baslashed letters ('\T' should display 'T')
+//
+//	php_date: simulate PHP date() function.
 //
 
 function php_date(f, date)
@@ -118,7 +113,8 @@ var i, chunk, v, s, str = '', jsdate = date || new Date,
 
 	for(i=0; i<f.length; i++) {
 		chunk = f.charAt(i);
-//	replace switch with imbricated ternary conditions... ugly but much shorter...
+
+//	TODO: replace switch with imbricated ternary conditions... ugly but much shorter...
 //
 		switch(chunk) {
 			case '\\':	//	Show next char as is in the string.
@@ -127,7 +123,7 @@ var i, chunk, v, s, str = '', jsdate = date || new Date,
 			case 'd':	//	day of the month, 2 digits with leading 0
 				chunk = pad2digits(d);
 				break;
-			case 'D':	//	3 letters representation of a day
+			case 'D':	//	short week day name
 				chunk = calNames.get(2, wd);
 				break;
 			case 'j':	//	day of the month without leading 0
@@ -143,7 +139,7 @@ var i, chunk, v, s, str = '', jsdate = date || new Date,
 				chunk = wd;
 				break;
 			case 'z':	//	day of the year
-				chunk = jsdate.dayOfYear();
+				chunk = jsdate.days(new Date(y, 0, 1));
 				break;
 			case 'W':	//	ISO-8601 week number of year, weeks starting on Monday
 				chunk = pad2digits(getISOWeek(jsdate));

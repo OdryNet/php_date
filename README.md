@@ -15,7 +15,7 @@ Possible format characters:
 
 	d	day of the month (2 digits, 0 padded)
 
-	D	week day name (3 letters in english, Mon to Sun)
+	D	short week day name (3 letters in english, Mon to Sun)
 
 	j	day of the month (no leading 0)
 
@@ -71,9 +71,9 @@ Possible format characters:
 
 	I	daylight saving active (0 or 1)
 
-	O	difference to GMT (+-)HH:MM
+	O	difference to GMT (+-)HHMM
 
-	P	difference to GMT (+-)HHMM
+	P	difference to GMT (+-)HH:MM
 
 	T	timezone abbreviation (EST, MDT, CEST, etc...) does not work with all browsers
 
@@ -95,5 +95,5 @@ Possible format characters:
 
 ## Known bugs
 
-	the 'z' argument looks to have a problem  around midnight, probably something to do with the fact that the PHP date functon works with UTC time, whereas the Javascript version works with local time.
+the 'z' argument looks to have a problem  around midnight, probably something to do with the fact that the PHP date functon works with UTC time, whereas the Javascript version works with local time.
 
