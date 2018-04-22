@@ -1,11 +1,8 @@
-//	Javascript php_date portuguese names
-//	Use:
-//	<script src=php_date.js></script>
-//	<script src=php_date.fr.js></script>
+//	locale: pt_PT
 
 calNames.set([
-	"Segunda Terça Quarta Quinta Sexta Sábado Domingo",
+	"Domingo Segunda Terça Quarta Quinta Sexta Sábado",
 	"Janeiro Fevereiro Março Abril Maio Junho Julho Agosto Setembro Outubro Novembro Dezembro",
-	"Seg Ter Qua Qui Sex Sáb Dom",
+	"Dom Seg Ter Qua Qui Sex Sáb",
 	"Jan Fev Mar Abr Mai Jun Jul Ago Set Out Nov Dez"
 ]);

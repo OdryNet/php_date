@@ -43,6 +43,10 @@ Possible format characters:
 
 	o	ISO-8601 year number
 
+	Y	full year (4 digits)
+
+	y	short year (2 digits)
+
 	a	am/pm
 
 	A	AM/PM
@@ -89,4 +93,7 @@ Possible format characters:
 	now = php_date("D, d M Y H:i:s O");
 	//	Fri, 21 Aug 2015 12:34:56 +0200
 
+## Known bugs
+
+	- the 'z' argument looks to have a problem  around midnight, probably something to do with the fact that the PHP date functon works with UTC time, whereas the Javascript version works with local time.
 

@@ -1,11 +1,8 @@
-//	Javascript php_date italian names
-//	Use:
-//	<script src=php_date.js></script>
-//	<script src=php_date.fr.js></script>
+//	locale: it_IT
 
 calNames.set([
-	"lunedì martedì mercoledì giovedì venerdì sabato domenica",
+	"domenica lunedì martedì mercoledì giovedì venerdì sabato",
 	"gennaio febbraio marzo aprile maggio giugno luglio agosto settembre ottobre novembre dicembre",
-	"lun mar mer gio ven sab dom",
+	"dom lun mar mer gio ven sab",
 	"gen feb mar apr mag giu lug ago set ott nov dic"
 ]);
