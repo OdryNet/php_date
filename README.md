@@ -95,7 +95,7 @@ Possible format characters:
 	
 	//	Using different locale
 	<script src="/php_date/php_date.js"></script>
-	<script srv="/php_date/php_date.fr.js"></script>
+	<script src="/php_date/php_date.fr.js"></script>
 	<script>
 	var full_date = php_date("l d F Y à H\\hi");
 	//	vendredi 21 août 2018 à 12h34
