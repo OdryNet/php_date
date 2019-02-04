@@ -67,7 +67,7 @@ Possible format characters:
 
 	u	micro seconds (000000 to 999999)
 
-	S	ordinal suffic (st, nd, rd or th)
+	S	ordinal suffix (st, nd, rd or th)
 
 	I	daylight saving active (0 or 1)
 
